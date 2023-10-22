@@ -23,7 +23,7 @@ fi
 cd ${TMP}
 for pkg in ${PKGS}; do
     if [ ! -f "${pkg}" ]; then
-        wget "${URL}/${pkg}"
+        curl -O "${URL}/${pkg}"
     fi
 done
 pacman -U mingw-w64-${ARCH}-*-any.pkg.tar.*
