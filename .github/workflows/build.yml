@@ -71,7 +71,7 @@ jobs:
         done
         exit 1
 
-    - uses: actions/upload-artifact@v3
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
-        path: |
-          mingw-*.pkg.tar.zst
+        path: mingw-w64-*/mingw-*.pkg.tar.zst
