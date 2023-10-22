@@ -3,6 +3,13 @@ set -e -x
 CWD=`pwd`
 MSYSTEM=$1
 ARCH=$2
+
+if [ "$MSYSTEM" = "mingw32" ]; then
+  mcode="mcode"
+else
+  mcode="llvm"
+fi
+
 VERSION="current"
 TMP="${CWD}/tmp-${VERSION}"
 URL="https://repo.msys2.org/mingw/${MSYSTEM}"
@@ -14,7 +21,7 @@ mingw-w64-${ARCH}-libgccjit-13.1.0-7-any.pkg.tar.zst
 mingw-w64-${ARCH}-gcc-fortran-13.1.0-7-any.pkg.tar.zst
 mingw-w64-${ARCH}-gcc-libgfortran-13.1.0-7-any.pkg.tar.zst
 mingw-w64-${ARCH}-gcc-objc-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-ghdl-llvm-3.0.0.r147.g6c56631a7-2-any.pkg.tar.zst
+mingw-w64-${ARCH}-ghdl-${mcode}-3.0.0.r147.g6c56631a7-2-any.pkg.tar.zst
 "
 
 if [ ! -d "${TMP}" ]; then
