@@ -18,7 +18,7 @@ jobs:
             { msys2: MINGW32, arch: i686 },
             { msys2: MINGW64, arch: x86_64}
           ]
-    continue-on-error: true
+    continue-on-error: false
     defaults:
       run:
         shell: msys2 {0}
@@ -45,7 +45,6 @@ jobs:
     - name: Install extra packages
       run: |
         ./install_packages.sh ${{ matrix.target.msys2 }} ${{ matrix.target.arch }}
-      shell: bash
 
     - name: Build Yosys package
       working-directory: mingw-w64-yosys
