@@ -1,0 +1,63 @@
+_realname=yosys
+pkgbase=mingw-w64-${_realname}
+pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
+pkgver=0.31
+pkgrel=1
+pkgdesc="A framework for RTL synthesis tools (mingw-w64)"
+arch=('any')
+mingw_arch=('mingw32' 'mingw64' 'ucrt64')
+license=("ISC")
+url="http://www.clifford.at/yosys/"
+groups=("${MINGW_PACKAGE_PREFIX}-eda")
+depends=(
+  "${MINGW_PACKAGE_PREFIX}-ghdl"
+  "${MINGW_PACKAGE_PREFIX}-python"
+)
+checkdepends=("${MINGW_PACKAGE_PREFIX}-iverilog")
+makedepends=(
+  'flex'
+  'git'
+  "${MINGW_PACKAGE_PREFIX}-ghdl"
+  "${MINGW_PACKAGE_PREFIX}-python"
+  "${MINGW_PACKAGE_PREFIX}-cc"
+)
+
+_commit='d44a7bc'
+source=(
+  "${_realname}::git+https://github.com/YosysHQ/${_realname}.git#tag=yosys-${pkgver}"
+  "ghdl-yosys-plugin::git+https://github.com/ghdl/ghdl-yosys-plugin.git#commit=${_commit}"
+)
+sha256sums=(
+  'SKIP'
+  'SKIP'
+)
+
+build() {
+  cd "${srcdir}/${_realname}"
+
+  if [ "$CARCH" = "i686" ]; then
+    make config-msys2-32 ${MAKEFLAGS}
+  fi
+
+  if [ "$CARCH" = "x86_64" ]; then
+    make config-msys2-64 ${MAKEFLAGS}
+  fi
+
+  mv "${srcdir}/ghdl-yosys-plugin"/src frontends/ghdl
+  echo "ENABLE_GHDL=1" >> Makefile.conf
+  echo "GHDL_PREFIX=${MINGW_PREFIX}" >> Makefile.conf
+
+  make \
+    GIT_REV="${_commit}" \
+    PRETTY=0
+}
+
+check() {
+  cd "${srcdir}/${_realname}"
+  #make test ${MAKEFLAGS}
+}
+
+package() {
+  cd "${srcdir}/${_realname}"
+  make DESTDIR="${pkgdir}" install
+}

@@ -1,0 +1,73 @@
+name: 'build'
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+
+  msys2:
+    runs-on: windows-latest
+    strategy:
+        fail-fast: false
+        max-parallel: 2
+        matrix:
+          target: [
+            { msys2: MINGW32, arch: i686 },
+            { msys2: MINGW64, arch: x86_64}
+          ]
+    continue-on-error: true
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      MINGW_INSTALLS: ${{ matrix.target.msys2 }}
+    steps:
+
+    - run: git config --global core.autocrlf input
+      shell: bash
+
+    - uses: actions/checkout@v3
+
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >
+          base-devel
+          git
+          mingw-w64-${{ matrix.target.arch }}-toolchain
+          mingw-w64-${{ matrix.target.arch }}-autotools
+          mingw-w64-${{ matrix.target.arch }}-python
+        msystem: ${{ matrix.target.msys2 }}
+
+    - run: install_packages.sh
+      shell: bash
+
+    - name: Build Yosys package
+      working-directory: mingw-w64-yosys
+      run: |
+        tries=0
+        # Try building three times due to the arbitrary 'Bad address' error
+        while [ $tries -lt 3 ]; do
+          makepkg-mingw --noconfirm --noprogressbar -sCLfc && exit 0
+          tries=$((tries+1))
+        done
+        exit 1
+
+    - name: Build SymbiYosys package
+      working-directory: mingw-w64-python-sby
+      run: |
+        tries=0
+        # Try building three times due to the arbitrary 'Bad address' error
+        while [ $tries -lt 3 ]; do
+          makepkg-mingw --noconfirm --noprogressbar -sCLfc && exit 0
+          tries=$((tries+1))
+        done
+        exit 1
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: |
+          mingw-*.pkg.tar.zst
