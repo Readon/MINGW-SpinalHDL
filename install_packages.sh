@@ -26,4 +26,4 @@ for pkg in ${PKGS}; do
         curl -O "${URL}/${pkg}"
     fi
 done
-pacman -U mingw-w64-${ARCH}-*-any.pkg.tar.*
+pacman -U --noconfirm mingw-w64-${ARCH}-*-any.pkg.tar.*
