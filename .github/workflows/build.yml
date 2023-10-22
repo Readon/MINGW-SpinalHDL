@@ -42,7 +42,9 @@ jobs:
           mingw-w64-${{ matrix.target.arch }}-python
         msystem: ${{ matrix.target.msys2 }}
 
-    - run: ./install_packages.sh ${{ matrix.target.msys2 }} ${{ matrix.target.arch }}
+    - name: Install extra packages
+      run: |
+        ./install_packages.sh ${{ matrix.target.msys2 }} ${{ matrix.target.arch }}
       shell: bash
 
     - name: Build Yosys package
