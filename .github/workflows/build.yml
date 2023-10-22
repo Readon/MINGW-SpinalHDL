@@ -54,6 +54,7 @@ jobs:
         # Try building three times due to the arbitrary 'Bad address' error
         while [ $tries -lt 3 ]; do
           makepkg-mingw --noconfirm --noprogressbar -sCLfc && exit 0
+          pacman -U --noconfirm mingw-w64-*-any.pkg.tar.*
           tries=$((tries+1))
         done
         exit 1
@@ -65,6 +66,7 @@ jobs:
         # Try building three times due to the arbitrary 'Bad address' error
         while [ $tries -lt 3 ]; do
           makepkg-mingw --noconfirm --noprogressbar -sCLfc && exit 0
+          pacman -U --noconfirm mingw-w64-*-any.pkg.tar.*
           tries=$((tries+1))
         done
         exit 1
