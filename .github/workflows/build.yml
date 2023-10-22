@@ -37,6 +37,7 @@ jobs:
         install: >
           base-devel
           git
+          mingw-w64-${{ matrix.target.arch }}-wget
           mingw-w64-${{ matrix.target.arch }}-toolchain
           mingw-w64-${{ matrix.target.arch }}-autotools
           mingw-w64-${{ matrix.target.arch }}-python
