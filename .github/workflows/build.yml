@@ -23,7 +23,7 @@ jobs:
       run:
         shell: msys2 {0}
     env:
-      MINGW_INSTALLS: ${{ matrix.target.msys2 }}
+      MINGW_ARCH: ${{ matrix.target.msys2 }}
     steps:
 
     - run: git config --global core.autocrlf input
