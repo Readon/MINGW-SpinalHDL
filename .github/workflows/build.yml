@@ -75,3 +75,28 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         path: mingw-w64-*/mingw-*.pkg.tar.zst
+
+  release:
+    needs:
+      - msys2
+    runs-on: windows-latest
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: Upload Yosys
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: mingw-w64-yosys/mingw-w64-${{ matrix.target.arch }}-yosys-*.pkg.tar.zst
+          asset_name: mingw-w64-${{ matrix.target.arch }}-yosys-latest-any.pkg.tar.zst
+          asset_content_type: application/octet-stream
+      - name: Upload SymbiYosys
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: mingw-w64-python-sby/mingw-w64-${{ matrix.target.arch }}-python-sby-*.pkg.tar.zst
+          asset_name: mingw-w64-${{ matrix.target.arch }}-python-sby-latest-any.pkg.tar.zst
+          asset_content_type: application/octet-stream
