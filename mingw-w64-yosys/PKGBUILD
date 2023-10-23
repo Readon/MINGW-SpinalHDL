@@ -26,11 +26,19 @@ _commit='d44a7bc'
 source=(
   "${_realname}::git+https://github.com/YosysHQ/${_realname}.git#tag=yosys-${pkgver}"
   "ghdl-yosys-plugin::git+https://github.com/ghdl/ghdl-yosys-plugin.git#commit=${_commit}"
+  "0001-fix-runtime-error-on-msys2.patch"
 )
 sha256sums=(
   'SKIP'
   'SKIP'
+  'SKIP'
 )
+
+prepare() {
+  cd "${srcdir}"/${_realname}
+
+  patch -Np1 -i "${srcdir}"/0001-fix-runtime-error-on-msys2.patch
+}
 
 build() {
   cd "${srcdir}/${_realname}"
@@ -60,4 +68,8 @@ check() {
 package() {
   cd "${srcdir}/${_realname}"
   make DESTDIR="${pkgdir}" install
+  
+	for _f in "${pkgdir}${MINGW_PREFIX}"/bin/*-script.py; do
+		sed -e '1 { s/^#!.*$// }' -i ${_f}
+	done
 }
