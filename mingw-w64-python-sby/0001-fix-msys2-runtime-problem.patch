@@ -1,0 +1,26 @@
+From 7f40cebfe60c90dd310287f54da3881073528484 Mon Sep 17 00:00:00 2001
+From: Xiao Yindong <xydarcher@uestc.edu.cn>
+Date: Tue, 24 Oct 2023 01:16:31 +0800
+Subject: [PATCH] fix msys2 runtime problem.
+
+---
+ extern/launcher.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/extern/launcher.c b/extern/launcher.c
+index 49d6414..afdff8e 100644
+--- a/extern/launcher.c
++++ b/extern/launcher.c
+@@ -146,9 +146,6 @@ char *find_exe(char *exename, char *script) {
+         easy_install-ed scripts use the absolute path to python[w].exe
+     */
+     _splitpath(script, drive, dir, fname, ext);
+-    result = dir + strlen(dir) -1;
+-    if (*result == '\\') result--;
+-    while (*result != '\\' && result>=dir) *result-- = 0;
+     _makepath(path, drive, dir, exename, NULL);
+     return loadable_exe(path);
+ }
+-- 
+2.38.1.windows.1
+

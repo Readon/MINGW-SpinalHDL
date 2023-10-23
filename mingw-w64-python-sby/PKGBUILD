@@ -22,13 +22,25 @@ optdepends=(
 makedepends=("git")
 source=(
 	"${_realname}::git+https://github.com/YosysHQ/sby.git#tag=yosys-${pkgver}"
+	"0001-fix-msys2-runtime-problem.patch"
 )
 sha256sums=(
 	"SKIP"
+	"SKIP"
 )
+
+prepare() {
+  cd "${srcdir}"/${_realname}
+
+  patch -Np1 -i "${srcdir}"/0001-fix-msys2-runtime-problem.patch
+}
 
 package() {
 	cd "${srcdir}/${_realname}"
 	make PREFIX="${MINGW_PREFIX}" DESTDIR="${pkgdir}" install
 	install -Dm644 COPYING "${pkgdir}/${MINGW_PREFIX}/share/yosys/licenses/LICENSE"
+	
+	for _f in "${pkgdir}${MINGW_PREFIX}"/bin/*-script.py; do
+		sed -e '1 { s/^#!.*$// }' -i ${_f}
+	done
 }
