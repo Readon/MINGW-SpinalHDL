@@ -102,15 +102,26 @@ jobs:
       - run: ls -R ${{ steps.download_artifact.outputs.download_path }}
 
       - name: List files
+        id: list_files
         run: |
           files=$(find ${{ steps.download_artifact.outputs.download_path }} -name '*.tar.zst')
+          filenames=$(ls ${files} | xargs -n 1 basename)
 
       - name: Upload files
         id: upload
-        run: |
-          for file in $files; do
-            upload-release-asset --owner ${{ github.repository_owner }} --repo ${{ github.repository }} --tag ${{ github.ref }} --file $file --name $(basename $file)
-          done
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.download_artifact.outputs.download_path }}/
+          asset_name: ${{ steps.list_files.outputs.files }}
+          asset_content_type: application/octet-stream
+
+        # run: |
+        #   for file in $files; do
+        #     upload-release-asset --owner ${{ github.repository_owner }} --repo ${{ github.repository }} --tag ${{ github.ref }} --file $file --name $(basename $file)
+        #   done
 
       # - name: Upload Yosys x64
       #   uses: actions/upload-release-asset@v1
