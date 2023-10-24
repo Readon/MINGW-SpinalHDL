@@ -110,14 +110,13 @@ jobs:
 
       - name: Upload files
         id: upload
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_artifact.outputs.download_path }}/
-          asset_name: ${{ steps.list_files.outputs.files }}
-          asset_content_type: application/octet-stream
+          files: |
+            mingw-*.tar.zst
 
         # run: |
         #   for file in $files; do
