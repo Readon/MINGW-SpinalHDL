@@ -104,7 +104,7 @@ jobs:
       - name: List files
         id: list_files
         run: |
-          files=$(find ${{ steps.download_artifact.outputs.download_path }} -name '*.tar.zst')
+          files=$(find . -name '*.tar.zst')
           filenames=$(ls ${files} | xargs -n 1 basename)
           echo "::set-output name=files::${files}"
 
