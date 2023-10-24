@@ -101,42 +101,53 @@ jobs:
       
       - run: ls -R ${{ steps.download_artifact.outputs.download_path }}
 
-      - name: Upload Yosys x64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-yosys/mingw-w64-x86_64-yosys-*.pkg.tar.zst
-          asset_name: mingw-w64-x86_64-yosys-latest-any.pkg.tar.zst
-          asset_content_type: application/octet-stream
+      - name: List files
+        run: |
+          files=$(find ${{ steps.download_artifact.outputs.download_path }} -name '*.tar.zst')
 
-      - name: Upload SymbiYosys x64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-python-sby/mingw-w64-x86_64-python-sby-*.pkg.tar.zst
-          asset_name: mingw-w64-x86_64-python-sby-latest-any.pkg.tar.zst
-          asset_content_type: application/octet-stream
+      - name: Upload files
+        id: upload
+        run: |
+          for file in $files; do
+            upload-release-asset --owner ${{ github.repository_owner }} --repo ${{ github.repository }} --tag ${{ github.ref }} --file $file --name $(basename $file)
+          done
 
-      - name: Upload Yosys
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-yosys/mingw-w64-i686-yosys-*.pkg.tar.zst
-          asset_name: mingw-w64-i686-yosys-latest-any.pkg.tar.zst
-          asset_content_type: application/octet-stream
+      # - name: Upload Yosys x64
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-yosys/mingw-w64-x86_64-yosys-*.pkg.tar.zst
+      #     asset_name: mingw-w64-x86_64-yosys-latest-any.pkg.tar.zst
+      #     asset_content_type: application/octet-stream
 
-      - name: Upload SymbiYosys
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-python-sby/mingw-w64-i686-python-sby-*.pkg.tar.zst
-          asset_name: mingw-w64-i686-python-sby-latest-any.pkg.tar.zst
-          asset_content_type: application/octet-stream
+      # - name: Upload SymbiYosys x64
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-python-sby/mingw-w64-x86_64-python-sby-*.pkg.tar.zst
+      #     asset_name: mingw-w64-x86_64-python-sby-latest-any.pkg.tar.zst
+      #     asset_content_type: application/octet-stream
+
+      # - name: Upload Yosys
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-yosys/mingw-w64-i686-yosys-*.pkg.tar.zst
+      #     asset_name: mingw-w64-i686-yosys-latest-any.pkg.tar.zst
+      #     asset_content_type: application/octet-stream
+
+      # - name: Upload SymbiYosys
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ steps.download_artifact.outputs.download_path }}/mingw-w64-python-sby/mingw-w64-i686-python-sby-*.pkg.tar.zst
+      #     asset_name: mingw-w64-i686-python-sby-latest-any.pkg.tar.zst
+      #     asset_content_type: application/octet-stream
