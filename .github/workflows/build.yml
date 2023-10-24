@@ -116,7 +116,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            mingw-*.tar.zst
+            ${{ steps.list_files.outputs.files }}
 
         # run: |
         #   for file in $files; do
