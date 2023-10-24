@@ -39,8 +39,11 @@ package() {
 	cd "${srcdir}/${_realname}"
 	make PREFIX="${MINGW_PREFIX}" DESTDIR="${pkgdir}" install
 	install -Dm644 COPYING "${pkgdir}/${MINGW_PREFIX}/share/yosys/licenses/LICENSE"
-	
-	for _f in "${pkgdir}${MINGW_PREFIX}"/bin/*-script.py; do
-		sed -e '1 { s/^#!.*$// }' -i ${_f}
-	done
+  
+	files=$(find "${pkgdir}${MINGW_PREFIX}"/bin -type f -name "*-script.py")
+	if [ -n "$files" ]; then
+		for _f in "$files"; do
+			sed -e '1 { s/^#!.*$// }' -i ${_f}
+		done
+	fi
 }
