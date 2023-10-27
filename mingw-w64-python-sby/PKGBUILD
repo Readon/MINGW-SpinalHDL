@@ -1,7 +1,7 @@
 _realname=python-sby
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver="0.32"
+pkgver="0.33"
 pkgrel=1
 pkgdesc="Front-end for Yosys-based formal verification flows"
 arch=("any")
