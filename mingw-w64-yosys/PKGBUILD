@@ -33,8 +33,8 @@ source=(
   "abc-${pkgver}.tar.gz::https://github.com/YosysHQ/yosys/releases/download/${_realname}-${pkgver}/abc.tar.gz"
   "https://github.com/ghdl/ghdl-yosys-plugin/archive/${_ghdl_plugin_commit}/ghdl-yosys-plugin-${_ghdl_plugin_commit}.tar.gz"
 )
-sha256sums=('5f3d7bb12c5371db00586700a658a9196008a9457839f046403a660fe0c7a1df'
-            'a453ead5c6ee63a87588be63669bfc919cfe9a9b9b3a76d438fc11d90a6a9666'
+sha256sums=('b0037d0a5864550a07a72ba81346e52a7d5f76b3027ef1d7c71b975d2c8bd2b2'
+            'e36bd37051a11bdc10494dc571c2ffe50325dab3298402a2697806f40eef6cb1'
             '1c05d579f0799f027ede97adbc1283ad325ef8019614f9a3bca194997535176a')
 
 prepare() {
