@@ -40,7 +40,7 @@ sha256sums=('b0037d0a5864550a07a72ba81346e52a7d5f76b3027ef1d7c71b975d2c8bd2b2'
 prepare() {
   cd ${_realname}-${_realname}-${pkgver}
   cp -r "${srcdir}/ghdl-yosys-plugin-${_ghdl_plugin_commit}"/src frontends/ghdl
-  cp -r "${srcdir}"/YosysHQ-abc-* abc
+  cp -r "${srcdir}"/abc-yosys-* abc
 }
 
 build() {
