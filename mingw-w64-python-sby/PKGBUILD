@@ -1,7 +1,7 @@
 _realname=python-sby
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver="0.33"
+pkgver="0.41"
 pkgrel=1
 pkgdesc="Front-end for Yosys-based formal verification flows"
 arch=("any")
@@ -26,7 +26,7 @@ source=(
 )
 sha256sums=(
 	"SKIP"
-	"SKIP"
+	"b6236d1f9fe02623fd5d72f6b261df81b9d6cab5c28179770c563b8b4afd5f1f"
 )
 
 prepare() {
