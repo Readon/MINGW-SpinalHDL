@@ -32,15 +32,18 @@ source=(
   "https://github.com/YosysHQ/yosys/archive/${_realname}-${pkgver}.tar.gz"
   "abc-${pkgver}.tar.gz::https://github.com/YosysHQ/yosys/releases/download/${_realname}-${pkgver}/abc.tar.gz"
   "https://github.com/ghdl/ghdl-yosys-plugin/archive/${_ghdl_plugin_commit}/ghdl-yosys-plugin-${_ghdl_plugin_commit}.tar.gz"
+  "0001-fix-runtime-error-on-msys2.patch"
 )
 sha256sums=('b0037d0a5864550a07a72ba81346e52a7d5f76b3027ef1d7c71b975d2c8bd2b2'
             'e36bd37051a11bdc10494dc571c2ffe50325dab3298402a2697806f40eef6cb1'
-            '1c05d579f0799f027ede97adbc1283ad325ef8019614f9a3bca194997535176a')
+            '1c05d579f0799f027ede97adbc1283ad325ef8019614f9a3bca194997535176a'
+            'SKIP')
 
 prepare() {
   cd ${_realname}-${_realname}-${pkgver}
   cp -r "${srcdir}/ghdl-yosys-plugin-${_ghdl_plugin_commit}"/src frontends/ghdl
   cp -r "${srcdir}"/abc-yosys-* abc
+  patch -Np1 -i "${srcdir}"/0001-fix-runtime-error-on-msys2.patch
 }
 
 build() {
