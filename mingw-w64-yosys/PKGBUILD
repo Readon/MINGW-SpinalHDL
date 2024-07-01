@@ -25,6 +25,7 @@ depends=(
 )
 checkdepends=("${MINGW_PACKAGE_PREFIX}-iverilog")
 makedepends=(
+  "base-devel"
   "${MINGW_PACKAGE_PREFIX}-cc"
 )
 _ghdl_plugin_commit="0c4740a4f8f1e615cc587b3cd3849fa23a623862"
