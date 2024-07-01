@@ -15,7 +15,10 @@ depends=(
   "${MINGW_PACKAGE_PREFIX}-gcc"
   "${MINGW_PACKAGE_PREFIX}-python-pytest"
 )
-makedepends=("git")
+makedepends=("git"
+  "${MINGW_PACKAGE_PREFIX}-python-pip"
+  "${MINGW_PACKAGE_PREFIX}-python-wheel"
+)
 source=(
 	"${_realname}::git+https://github.com/cocotb/cocotb.git"
 )
@@ -28,7 +31,16 @@ prepare() {
   git checkout tags/${pkgver}
 }
 
+build() {
+  cd "${srcdir}/${_realname}"
+  DISTUTILS_DEBUG=1 \
+  ${MINGW_PREFIX}/bin/python setup.py build_ext
+}
+
 package() {
 	cd "${srcdir}/${_realname}"
-	PREFIX="${MINGW_PREFIX}" CC="c++" DESTDIR="${pkgdir}" pip3 install --global-option build_ext --global-option --compiler=mingw32 --no-build-isolation .
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+  DISTUTILS_DEBUG=1 \
+  ${MINGW_PREFIX}/bin/python setup.py install --prefix=${MINGW_PREFIX} \
+                          --root="${pkgdir}" --optimize=1 --skip-build
 }
