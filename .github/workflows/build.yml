@@ -84,6 +84,18 @@ jobs:
         done
         exit 1
 
+    - name: Build Verilator package
+      working-directory: mingw-w64-verilator
+      run: |
+        tries=0
+        # Try building three times due to the arbitrary 'Bad address' error
+        while [ $tries -lt 3 ]; do
+          makepkg-mingw --noconfirm --noprogressbar -sCLfc
+          pacman -U --noconfirm mingw-w64-*-any.pkg.tar.* && exit 0
+          tries=$((tries+1))
+        done
+        exit 1
+
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
