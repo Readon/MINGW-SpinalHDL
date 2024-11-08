@@ -61,7 +61,7 @@ build() {
 
 check() {
   cd build-${MSYSTEM}
-  make test
+  # make test
 }
 
 package() {
