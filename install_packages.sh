@@ -11,17 +11,20 @@ else
 fi
 
 VERSION="current"
+GCC_VERSION="14.2.0-2"
+GHDL_VERSION="4.1.0-4"
+
 TMP="${CWD}/tmp-${VERSION}"
 URL="https://repo.msys2.org/mingw/${MSYSTEM}"
 PKGS="
-mingw-w64-${ARCH}-gcc-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-gcc-libs-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-gcc-ada-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-libgccjit-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-gcc-fortran-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-gcc-libgfortran-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-gcc-objc-13.1.0-7-any.pkg.tar.zst
-mingw-w64-${ARCH}-ghdl-${mcode}-4.1.0-4-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-libs-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-ada-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-libgccjit-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-fortran-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-libgfortran-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-gcc-objc-${GCC_VERSION}-any.pkg.tar.zst
+mingw-w64-${ARCH}-ghdl-${mcode}-${GHDL_VERSION}-any.pkg.tar.zst
 "
 
 if [ ! -d "${TMP}" ]; then
