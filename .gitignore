@@ -4,3 +4,4 @@
 *.zst
 !*/PKGBUILD
 !*/*.patch
+!.github/*
