@@ -57,6 +57,8 @@ build() {
     PRETTY=0 \
     ENABLE_GHDL=1 \
     GHDL_PREFIX=${MINGW_PREFIX}
+
+  sed -i '1{/^#!/d}' yosys-smtbmc-script.py
 }
 
 check() {
