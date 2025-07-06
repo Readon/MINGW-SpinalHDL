@@ -41,12 +41,15 @@ jobs:
           mingw-w64-${{ matrix.target.arch }}-toolchain
           mingw-w64-${{ matrix.target.arch }}-autotools
           mingw-w64-${{ matrix.target.arch }}-python
+          mingw-w64-${{ matrix.target.arch }}-gcc
+          mingw-w64-${{ matrix.target.arch }}-gcc-ada
+          mingw-w64-${{ matrix.target.arch }}-ghdl
         msystem: ${{ matrix.target.msys2 }}
 
-    - name: Install extra packages
-      run: |
-        msystem=$(echo "${{ matrix.target.msys2 }}" | tr '[:upper:]' '[:lower:]')
-        ./install_packages.sh $msystem ${{ matrix.target.arch }}
+    # - name: Install extra packages
+    #   run: |
+    #     msystem=$(echo "${{ matrix.target.msys2 }}" | tr '[:upper:]' '[:lower:]')
+    #     ./install_packages.sh $msystem ${{ matrix.target.arch }}
 
     - name: Build Yosys package
       working-directory: mingw-w64-yosys
