@@ -40,8 +40,15 @@ build() {
 
 package() {
 	cd "${srcdir}/${_realname}"
-  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
-  DISTUTILS_DEBUG=1 \
-  ${MINGW_PREFIX}/bin/python setup.py install --prefix=${MINGW_PREFIX} \
-                          --root="${pkgdir}" --optimize=1
+  	MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+  	DISTUTILS_DEBUG=1 \
+  	${MINGW_PREFIX}/bin/python setup.py install --prefix=${MINGW_PREFIX} \
+                          --root="${pkgdir}" --optimize=1                   
+	
+	files=$(find "${pkgdir}${MINGW_PREFIX}"/bin -type f -name "*-script.py")
+	if [ -n "$files" ]; then
+		for _f in "$files"; do
+			sed -e '1 { s/^#!.*$// }' -i ${_f}
+		done
+	fi
 }
