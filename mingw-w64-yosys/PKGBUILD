@@ -43,14 +43,13 @@ prepare() {
   mkdir -p ${_realname}-${pkgver}
   tar -xzf ${_realname}-${pkgver}.tar.gz -C ${_realname}-${pkgver}
   
-  cd ${_realname}-${_realname}-${pkgver}
-  cp -r "${srcdir}/ghdl-yosys-plugin-${_ghdl_plugin_commit}"/src frontends/ghdl
+  cp -r "${srcdir}/ghdl-yosys-plugin-${_ghdl_plugin_commit}"/src ${_realname}-${pkgver}/frontends/ghdl
   patch -Np1 -i "${srcdir}"/0001-fix-runtime-error-on-msys2.patch
 }
 
 build() {
   [[ -d build-${MSYSTEM} ]] && rm -rf build-${MSYSTEM}
-  cp -r ${_realname}-${_realname}-${pkgver} build-${MSYSTEM} && cd build-${MSYSTEM}
+  cp -r ${_realname}-${pkgver} build-${MSYSTEM} && cd build-${MSYSTEM}
 
   make config-msys2-64
 
