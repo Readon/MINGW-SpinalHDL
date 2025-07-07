@@ -21,7 +21,7 @@ optdepends=(
 )
 makedepends=("git")
 source=(
-	"${_realname}::git+https://github.com/YosysHQ/sby.git#tag=yosys-${pkgver}"
+	"${_realname}::git+https://github.com/YosysHQ/sby.git#tag=v${pkgver}"
 	"0001-fix-msys2-runtime-problem.patch"
 )
 sha256sums=(
