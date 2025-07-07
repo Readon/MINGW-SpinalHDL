@@ -1,7 +1,7 @@
 _realname=python-cocotb
 pkgbase=mingw-w64-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
-pkgver="v1.9.2"
+pkgver="v1.8.1"
 pkgrel=1
 pkgdesc="a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python"
 arch=("any")
